@@ -1,0 +1,158 @@
+########################################
+# Secret Notification Rules
+########################################
+
+variable "cloudtrail_log_group" {
+  # can't leave this blank or upstream module var validation will fail in tflint
+  default     = "change_me"
+  description = "Cloudtrail Log Group name (required if `enable_secret_access_notification=true`)"
+  type        = string
+}
+
+variable "enable_secret_access_notification" {
+  default     = true
+  description = "Notify SNS topic on secret access (not recommended for most use cases)"
+  type        = bool
+}
+
+variable "secret_access_metric_namespace" {
+  default     = "SecretsManager"
+  description = "Metric namespace to use for CloudWatch metric"
+  type        = string
+}
+
+variable "secret_access_notification_arn" {
+  default     = ""
+  description = "SNS topic to notify on secret access (required if `enable_secret_access_notification=true`)"
+  type        = string
+}
+
+########################################
+# Complexity rules
+########################################
+variable "length" {
+  description = "Length of string"
+  type        = number
+  default = 20
+}
+
+variable "min_lower" {
+  default     = 0
+  description = "Minimum number of lower case characters"
+  type        = number
+}
+
+variable "min_numeric" {
+  default     = 0
+  description = "Minimum number of numbers"
+  type        = number
+}
+
+variable "min_special" {
+  default     = 0
+  description = "Minimum number of special characters"
+  type        = number
+}
+
+variable "min_upper" {
+  default     = 0
+  description = "Minimum number of upper case characters"
+  type        = number
+}
+
+variable "override_special" {
+  type    = string
+  default = ""
+}
+
+variable "use_lower" {
+  default     = true
+  description = "Use lower case  characters"
+  type        = bool
+}
+
+variable "use_number" {
+  default     = true
+  description = "Use numbers"
+  type        = bool
+}
+
+variable "use_special" {
+  default     = true
+  description = "Use special characters"
+  type        = bool
+}
+
+variable "use_upper" {
+  default     = true
+  description = "Use upper case characters"
+  type        = bool
+}
+
+########################################
+# General vars
+########################################
+variable "create_secret" {
+  default     = true
+  description = "If false, this module does nothing (since tf doesn't support conditional modules)"
+  type        = bool
+}
+
+variable "description" {
+  default     = ""
+  description = "Description to add to Secret"
+  type        = string
+}
+
+variable "kms_key_id" {
+  default     = null
+  description = "Optional. The KMS Key ID to encrypt the secret. KMS key arn or alias can be used."
+}
+
+variable "name" {
+  default     = ""
+  description = "Name (omit to use name_prefix)"
+  type        = string
+}
+
+variable "name_prefix" {
+  default     = "terraform"
+  description = "Name Prefix (not used if name specified)"
+  type        = string
+}
+
+variable "pass_version" {
+  default     = 1
+  description = "Password version. Increment this to trigger a new password."
+  type        = number
+}
+
+variable "recovery_window_in_days" {
+  default     = 30
+  description = "Number of days that AWS Secrets Manager waits before it can delete the secret."
+  type        = number
+}
+
+variable "tags" {
+  default     = {}
+  description = "Tags to add to supported resources"
+  type        = map(string)
+}
+
+
+variable "lambda_function_name" {
+  type        = string
+  description = "The name of the lamda function"
+}
+
+variable "enable_secrets_rotation" {
+  type        = bool
+  description = "Boolean values to enable secretes rotation"
+}
+
+variable "number_of_days_for_rotatating_secrets" {
+  type        = number
+  description = "Number of days before a secret is rotated"
+}
+
+
